@@ -1,5 +1,6 @@
 
 ![maya2024](https://img.shields.io/badge/Maya2024-tested-brightgreen.svg)
+# Forked to implement Qt bindings
 
 # wing-ide-maya
 Scripts and a menu for communicating between Maya and Wing
