@@ -35,6 +35,7 @@ except:
     from importlib import reload
 
 try:
+    '''
     import maya.utils
     import maya.cmds
     from maya import OpenMayaUI as omui
@@ -43,6 +44,16 @@ try:
     from PySide2.QtWidgets import *
     from PySide2.QtGui import *
     from shiboken2 import wrapInstance
+    '''
+    import maya.utils
+    import maya.cmds
+    from maya import OpenMayaUI as omui
+    
+    from Qt.QtCore import *
+    from Qt.QtWidgets import *
+    from Qt.QtGui import *
+    from Qt.QtCompat import wrapInstance
+    
     MAYA_RUNNING = True
 except ImportError:
     MAYA_RUNNING = False
@@ -897,12 +908,21 @@ class InstallerUi(QWidget):
         size = self.layout().minimumSize()
         width = size.width()
         height = size.height()
+        '''
         desktop = QApplication.desktop()
         screenNumber = desktop.screenNumber(QCursor.pos())
         screenRect = desktop.screenGeometry(screenNumber)
         widthCenter = (screenRect.width() / 2) - (width / 2)
         heightCenter = (screenRect.height() / 2) - (height / 2)        
         self.setGeometry(QRect(widthCenter, heightCenter, width, height))
+        '''
+        screen = QApplication.screenAt(QCursor.pos())
+        if screen is None:
+            screen = QApplication.primaryScreen()
+        screenRect = screen.geometry()
+        widthCenter = (screenRect.width() / 2) - (width / 2)
+        heightCenter = (screenRect.height() / 2) - (height / 2)
+        self.setGeometry(QRect(screenRect.x() + int(widthCenter), screenRect.y() + int(heightCenter), int(width), int(height)))
         
         
     def create_layout(self, background_color, company_logo_size):
@@ -971,7 +991,8 @@ class InstallerUi(QWidget):
         self.message_label.show()
         
         if self.module_manager.pre_install():
-            self.connect(self.module_manager, SIGNAL('finished()'), self.done)
+            #self.connect(self.module_manager, SIGNAL('finished()'), self.done)
+            self.module_manager.finished.connect(self.done)
             self.module_manager.start()
         
     
@@ -1009,7 +1030,8 @@ class MyInstaller(ModuleManager):
     def get_remote_package(self):
         """returns the github or PyPi name needed for installing"""
 
-        return r'https://github.com/Nathanieljla/wing-ide-maya/archive/refs/heads/main.zip'
+        #return r'https://github.com/Nathanieljla/wing-ide-maya/archive/refs/heads/main.zip'
+        return r'https://github.com/thedagnode/wing-ide-maya/archive/refs/heads/main.zip'
 
                 
     def install(self):
