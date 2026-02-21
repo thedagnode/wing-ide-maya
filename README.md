@@ -13,7 +13,6 @@ NOTE: The included wing_installer will install pymel if it's not already install
 ### Drag & Drop
 The easiest way to install this application is to ...
 1. Click this File Link [wing_installer.py](https://raw.githubusercontent.com/thedagnode/wing-ide-maya/main/wing/wing_installer.py) to download the installation python file.
-   <a href="https://raw.githubusercontent.com/thedagnode/wing-ide-maya/main/wing/wing_installer.py" download>Download wing_installer.py</a>
 3. Drag-n-drop the downloaded file into a maya-viewport. 
 4. Hit 'Install'
 
